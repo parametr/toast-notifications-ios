@@ -78,7 +78,7 @@ static iToastSettings *sharedSettings = nil;
                                                context:nil];
     CGSize textSize = rect.size;
 	
-	UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, textSize.width + kComponentPadding, textSize.height + kComponentPadding)];
+	UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, textSize.width, textSize.height)];
 	label.backgroundColor = [UIColor clearColor];
 	label.textColor = [UIColor whiteColor];
 	label.font = font;
@@ -112,7 +112,8 @@ static iToastSettings *sharedSettings = nil;
 		
 	} else {
 		v.frame = CGRectMake(0, 0, textSize.width + kComponentPadding * 2, textSize.height + kComponentPadding * 2);
-		label.center = CGPointMake(v.frame.size.width / 2, v.frame.size.height / 2);
+		label.center = CGPointMake(v.bounds.size.width / 2, v.bounds.size.height / 2);
+        label.textAlignment = NSTextAlignmentCenter;
 	}
 	CGRect lbfrm = label.frame;
 	lbfrm.origin.x = ceil(lbfrm.origin.x);
