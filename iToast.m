@@ -120,13 +120,17 @@ static iToastSettings *sharedSettings = nil;
 	lbfrm.origin.y = ceil(lbfrm.origin.y);
 	label.frame = lbfrm;
 	[v addSubview:label];
+#if !__has_feature(objc_arc)
 	[label release];
+#endif
 	
 	if (image) {
 		UIImageView *imageView = [[UIImageView alloc] initWithImage:image];
 		imageView.frame = [self _frameForImage:type inToastFrame:v.frame];
 		[v addSubview:imageView];
+#if !__has_feature(objc_arc)
 		[imageView release];
+#endif
 	}
 	
 	v.backgroundColor = [UIColor colorWithRed:theSettings.bgRed green:theSettings.bgGreen blue:theSettings.bgBlue alpha:theSettings.bgAlpha];
@@ -243,7 +247,11 @@ static iToastSettings *sharedSettings = nil;
 	v.alpha = 1;
 	[UIView commitAnimations];
 	
+#if !__has_feature(objc_arc)
 	view = [v retain];
+#else
+    view = v;
+#endif
 	
 	[v addTarget:self action:@selector(hideToast:) forControlEvents:UIControlEventTouchDown];
 }
@@ -308,7 +316,11 @@ static iToastSettings *sharedSettings = nil;
 
 
 + (iToast *) makeText:(NSString *) _text{
+#if !__has_feature(objc_arc)
 	iToast *toast = [[[iToast alloc] initWithText:_text] autorelease];
+#else
+	iToast *toast = [[iToast alloc] initWithText:_text];
+#endif
 	
 	return toast;
 }
